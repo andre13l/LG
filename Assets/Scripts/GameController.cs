@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public GameObject gun;
+    public Text HP;
     public float reloadTime = 1f;
-    public int borrachaLife = 100;
+    public int borrachaLife = 5;
 
-    private List<GameObject> borrachas = new List<GameObject>();
+    public List<GameObject> borrachas = new List<GameObject>();
     private int borrachasInPlay = 0;
     private bool isReloading = false;
 
@@ -30,9 +32,6 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        // Check if the left mouse button is pressed
-        if (Input.GetMouseButtonDown(0))
-        {
             // Shoot a ray from the gun's position in the direction it is facing
             Ray ray = new Ray(gun.transform.position, gun.transform.right);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -44,6 +43,7 @@ public class GameController : MonoBehaviour
                 if (borracha != null && borracha.IsHittable)
                 {
                     borrachaLife--;
+                    HP.text = string.Format("{0}", borrachaLife);
                     borracha.IsHittable = false;
 
                     // If the borracha's life reaches 0, disable it
@@ -66,7 +66,6 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
-        }
     }
 
     private IEnumerator MakeBorrachaHittableAgain(Borracha borracha)
