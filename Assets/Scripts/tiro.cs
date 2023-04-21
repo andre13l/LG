@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class tiro : MonoBehaviour
 {
     public GameObject bullet;
-    public GameObject gun;
 
+    private void OnTriggerEnter2D(Collider2D collision){
+        if(collision.tag == "bullet"){
+            Destroy(collision.gameObject);
+        }
+    }
     void Start(){
-        InvokeRepeating("SpawnBullet",0,1);
+
     }
 
     void Update()
@@ -17,9 +21,4 @@ public class tiro : MonoBehaviour
         
     }
 
-    void SpawnBullet(){
-        float spawn_position_x = gun.transform.position.x;
-        float spawn_position_y = gun.transform.position.y;
-        Instantiate(bullet, new Vector3(spawn_position_x, spawn_position_y, 0), Quaternion.identity);
-    }
 }
